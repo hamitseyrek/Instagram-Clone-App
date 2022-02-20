@@ -11,14 +11,24 @@ class UploadVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     
     @IBOutlet weak var commentText: UITextField!
     @IBOutlet weak var postImage: UIImageView!
+    @IBOutlet weak var postButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let keyboardRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        self.view.addGestureRecognizer(keyboardRecognizer)
         
         // Do any additional setup after loading the view.
         postImage.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectImage))
         postImage.addGestureRecognizer(gestureRecognizer)
+        
+        postButton.isEnabled = false
+    }
+    
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
     }
     
     @objc func selectImage() {
@@ -26,6 +36,8 @@ class UploadVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         pickerController.delegate = self
         pickerController.sourceType = .photoLibrary
         present(pickerController, animated: true, completion: nil)
+        
+        postButton.isEnabled = true
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -34,5 +46,6 @@ class UploadVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     }
     
     @IBAction func postClick(_ sender: Any) {
+        postButton.isEnabled = false
     }
 }

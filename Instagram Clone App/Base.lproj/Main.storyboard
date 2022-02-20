@@ -138,6 +138,7 @@
                     <navigationItem key="navigationItem" id="9xW-bg-Jzg"/>
                     <connections>
                         <outlet property="commentText" destination="Ugr-hs-Dt9" id="oaw-4F-yuJ"/>
+                        <outlet property="postButton" destination="b79-85-Smm" id="VTO-1x-cBQ"/>
                         <outlet property="postImage" destination="OKu-4U-bNx" id="J2t-8F-bfr"/>
                     </connections>
                 </viewController>
