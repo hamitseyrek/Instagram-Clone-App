@@ -11,7 +11,7 @@
         <!--SigninVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SigninVC" customModule="Instagram_Clone_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signInStoryBoardID" id="BYZ-38-t0r" customClass="SigninVC" customModule="Instagram_Clone_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -78,6 +78,7 @@
                             <constraint firstItem="fVE-d4-iUG" firstAttribute="top" secondItem="bkg-kf-d0v" secondAttribute="bottom" constant="93" id="yjX-rL-Bq1"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="0Hn-bh-J5k"/>
                     <connections>
                         <outlet property="passwordText" destination="apA-Ro-eiP" id="I7c-gL-BbR"/>
                         <outlet property="userNameText" destination="fVE-d4-iUG" id="zxZ-3F-LTp"/>
@@ -88,23 +89,63 @@
             </objects>
             <point key="canvasLocation" x="121.73913043478262" y="123.88392857142857"/>
         </scene>
-        <!--Upload-->
+        <!--UploadVC-->
         <scene sceneID="t6P-ZB-2je">
             <objects>
                 <viewController id="S9w-6W-9WG" customClass="UploadVC" customModule="Instagram_Clone_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ahi-p3-1T0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectImage" translatesAutoresizingMaskIntoConstraints="NO" id="OKu-4U-bNx">
+                                <rect key="frame" x="33" y="150" width="309" height="194"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b79-85-Smm">
+                                <rect key="frame" x="124" y="553" width="126" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="53" id="9ET-2b-Pw7"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Upload"/>
+                                <connections>
+                                    <action selector="postClick:" destination="S9w-6W-9WG" eventType="touchUpInside" id="vMM-Pa-OJQ"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ugr-hs-Dt9">
+                                <rect key="frame" x="75" y="433" width="224" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="SYc-mr-GYw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="LWd-Ld-b7z"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ugr-hs-Dt9" firstAttribute="top" secondItem="OKu-4U-bNx" secondAttribute="bottom" constant="89" id="0WV-In-l8V"/>
+                            <constraint firstItem="LWd-Ld-b7z" firstAttribute="bottom" secondItem="b79-85-Smm" secondAttribute="bottom" constant="123" id="1mg-Fl-M7d"/>
+                            <constraint firstItem="OKu-4U-bNx" firstAttribute="leading" secondItem="LWd-Ld-b7z" secondAttribute="leading" constant="33" id="8bq-Zh-yXV"/>
+                            <constraint firstItem="Ugr-hs-Dt9" firstAttribute="centerX" secondItem="ahi-p3-1T0" secondAttribute="centerX" id="ATz-TK-31D"/>
+                            <constraint firstItem="OKu-4U-bNx" firstAttribute="centerX" secondItem="Ugr-hs-Dt9" secondAttribute="centerX" id="EqZ-wM-b9c"/>
+                            <constraint firstItem="b79-85-Smm" firstAttribute="top" secondItem="Ugr-hs-Dt9" secondAttribute="bottom" constant="86" id="UeR-IW-jYh"/>
+                            <constraint firstItem="Ugr-hs-Dt9" firstAttribute="centerX" secondItem="b79-85-Smm" secondAttribute="centerX" id="dN8-WT-Adi"/>
+                            <constraint firstItem="OKu-4U-bNx" firstAttribute="top" secondItem="LWd-Ld-b7z" secondAttribute="top" constant="62" id="nLI-Fg-iFB"/>
+                            <constraint firstItem="b79-85-Smm" firstAttribute="leading" secondItem="LWd-Ld-b7z" secondAttribute="leading" constant="124" id="vAX-OC-izs"/>
+                            <constraint firstItem="Ugr-hs-Dt9" firstAttribute="leading" secondItem="LWd-Ld-b7z" secondAttribute="leading" constant="75" id="z48-qr-hHt"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Upload" image="u.circle" catalog="system" id="Z83-er-RQB"/>
+                    <navigationItem key="navigationItem" id="9xW-bg-Jzg"/>
+                    <connections>
+                        <outlet property="commentText" destination="Ugr-hs-Dt9" id="oaw-4F-yuJ"/>
+                        <outlet property="postImage" destination="OKu-4U-bNx" id="J2t-8F-bfr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ug2-dQ-vPa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1904" y="428"/>
+            <point key="canvasLocation" x="2976.8000000000002" y="427.83251231527095"/>
         </scene>
-        <!--Feed-->
+        <!--FeedVC-->
         <scene sceneID="zfX-5G-dE1">
             <objects>
                 <viewController id="Rhr-wQ-g1O" customClass="FeedVC" customModule="Instagram_Clone_App" customModuleProvider="target" sceneMemberID="viewController">
@@ -114,16 +155,23 @@
                         <viewLayoutGuide key="safeArea" id="5dN-pc-VGQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Feed" image="f.circle" catalog="system" id="Xbd-L0-arJ"/>
+                    <navigationItem key="navigationItem" id="MJN-EV-6Jr">
+                        <barButtonItem key="rightBarButtonItem" title="Log Out" id="OmL-E1-bQh">
+                            <connections>
+                                <action selector="logOutClick:" destination="Rhr-wQ-g1O" id="GkI-aP-XH3"/>
+                                <segue destination="BYZ-38-t0r" kind="presentation" identifier="toSignInVCS" modalPresentationStyle="fullScreen" id="45i-Gt-K9J"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e8s-iF-pb0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1904" y="-179"/>
+            <point key="canvasLocation" x="2978" y="-248"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Nhv-y4-Lmt">
             <objects>
-                <tabBarController id="Abb-nQ-4I2" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBarStoryBoardID" id="Abb-nQ-4I2" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="HTN-cf-3of"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GUn-RY-ddb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -131,17 +179,56 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Rhr-wQ-g1O" kind="relationship" relationship="viewControllers" id="irq-7g-6Hr"/>
-                        <segue destination="S9w-6W-9WG" kind="relationship" relationship="viewControllers" id="3GR-pH-yGw"/>
+                        <segue destination="xK8-ET-O5x" kind="relationship" relationship="viewControllers" id="irq-7g-6Hr"/>
+                        <segue destination="Bwd-g9-aZg" kind="relationship" relationship="viewControllers" id="3GR-pH-yGw"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UOK-TB-9fU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1014" y="124"/>
         </scene>
+        <!--Upload-->
+        <scene sceneID="KIF-fr-8T8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Bwd-g9-aZg" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Upload" image="u.circle" catalog="system" id="Z83-er-RQB"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5PR-oy-9Jk">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="S9w-6W-9WG" kind="relationship" relationship="rootViewController" id="Xs7-lt-Zbs"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DsN-v8-bLY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1903.2" y="427.83251231527095"/>
+        </scene>
+        <!--Feed-->
+        <scene sceneID="b3r-BA-ju4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xK8-ET-O5x" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Feed" image="f.circle" catalog="system" id="Xbd-L0-arJ"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="OTG-VI-6De">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Rhr-wQ-g1O" kind="relationship" relationship="rootViewController" id="UKu-xE-OoT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Be-V0-jww" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1903" y="-248"/>
+        </scene>
     </scenes>
     <resources>
         <image name="f.circle" catalog="system" width="128" height="121"/>
+        <image name="selectImage" width="773" height="705"/>
         <image name="u.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
