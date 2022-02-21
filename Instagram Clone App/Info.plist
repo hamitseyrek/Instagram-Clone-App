@@ -21,9 +21,9 @@
 			</array>
 		</dict>
 	</dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Let me please :)</string>
-	<key>NSCameraUsageDescription</key>
-	<string>I need your camera</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>
