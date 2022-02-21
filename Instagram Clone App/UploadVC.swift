@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Parse
 
 class UploadVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -47,5 +48,45 @@ class UploadVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     
     @IBAction func postClick(_ sender: Any) {
         postButton.isEnabled = false
+        
+        guard let user = PFUser.current() else {
+            return
+        }
+        
+        guard let data = postImage.image?.jpegData(compressionQuality: 0.6) else { return }
+        let pfImage = PFFileObject(name: "image", data: data)
+        
+        let object = PFObject(className: "posts")
+        object["comment"] = commentText.text
+        object["owner"] = user.username!
+        object["image"] = pfImage
+        object["postId"] = UUID().uuidString
+        
+        object.saveInBackground { result, error in
+            if error != nil {
+                self.makeAlert(title: "Error!", message: error?.localizedDescription ?? "Something went wrong !!!")
+            } else {
+                self.commentText.text = ""
+                self.postImage.image = UIImage(named: "selectImage")
+                self.postButton.isEnabled = true
+                self.tabBarController?.selectedIndex = 0
+            }
+        }
+        
+    }
+    
+    func makeAlert(title:String,message:String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        let button = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
+        alert.addAction(button)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func pauseApp() {
+        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
     }
 }

@@ -10,6 +10,7 @@ import Parse
 
 class FeedVC: UIViewController, UIWindowSceneDelegate {
 
+    @IBOutlet weak var tableView: UITableView!
     var window:UIWindow?
     
     override func viewDidLoad() {

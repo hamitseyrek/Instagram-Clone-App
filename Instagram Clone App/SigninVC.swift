@@ -10,7 +10,10 @@ import Parse
 
 class SigninVC: UIViewController {
     
+    var signUpModeActive = true
+    @IBOutlet weak var signUpOrLogInButton: UIButton!
     @IBOutlet weak var passwordText: UITextField!
+    @IBOutlet weak var switchLoginMode: UIButton!
     @IBOutlet weak var userNameText: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,32 +21,40 @@ class SigninVC: UIViewController {
     }
     
     
-    @IBAction func SignInClick(_ sender: Any) {
+    @IBAction func signUpOrLogInClick(_ sender: Any) {
         if userNameText.text != "" && passwordText.text != "" {
-            PFUser.logInWithUsername(inBackground: userNameText.text!, password: passwordText.text!) { responseUser, error in
-                if error == nil {
-                    self.performSegue(withIdentifier: "toTabBarVCS", sender: nil)
-                } else {
-                    self.makeAlert(title: "Error", message: error?.localizedDescription ?? "Error")
+            if signUpModeActive {
+                let user = PFUser()
+                user.username = userNameText.text
+                user.password = passwordText.text
+                
+                user.signUpInBackground { success, error in
+                    if error != nil {
+                        self.makeAlert(title: "Error", message: error?.localizedDescription ?? "Error")
+                    }
+                }
+            } else {
+                PFUser.logInWithUsername(inBackground: userNameText.text!, password: passwordText.text!) { responseUser, error in
+                    if error == nil {
+                        self.performSegue(withIdentifier: "toTabBarVCS", sender: nil)
+                    } else {
+                        self.makeAlert(title: "Error", message: error?.localizedDescription ?? "Error")
+                    }
                 }
             }
         } else {
             makeAlert(title: "Error!!!", message: "Username / Password can't be null")
         }
     }
-    @IBAction func SignupClick(_ sender: Any) {
-        if userNameText.text != "" && passwordText.text != "" {
-            let user = PFUser()
-            user.username = userNameText.text
-            user.password = passwordText.text
-            
-            user.signUpInBackground { success, error in
-                if error != nil {
-                    self.makeAlert(title: "Error", message: error?.localizedDescription ?? "Error")
-                }
-            }
+    @IBAction func switchLoginMode(_ sender: Any) {
+        if signUpModeActive {
+            signUpModeActive = false
+            signUpOrLogInButton.setTitle("Log In", for: [])
+            switchLoginMode.setTitle("Sign Up", for: [])
         } else {
-            makeAlert(title: "Error!!!", message: "Username / Password can't be null")
+            signUpModeActive = true
+            switchLoginMode.setTitle("Log In", for: [])
+            signUpOrLogInButton.setTitle("Sign Up", for: [])
         }
     }
     

@@ -23,5 +23,7 @@
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Let me please :)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>I need your camera</string>
 </dict>
 </plist>
