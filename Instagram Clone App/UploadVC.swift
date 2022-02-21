@@ -70,6 +70,8 @@ class UploadVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 self.postImage.image = UIImage(named: "selectImage")
                 self.postButton.isEnabled = true
                 self.tabBarController?.selectedIndex = 0
+                
+                NotificationCenter.default.post(name: Notification.Name("newPost"), object: nil)
             }
         }
         
