@@ -46,11 +46,15 @@ class FeedCell: UITableViewCell {
                 query.whereKey("user_name", equalTo: self.userNameLabel.text!)
                 query.findObjectsInBackground { objects, error in
                     if error == nil {
-                        print(objects)
-                        self.playerIDArray.removeAll()
+                        self.playerIDArray.removeAll(keepingCapacity: false)
                         for object in objects! {
                             self.playerIDArray.append(object.object(forKey: "player_id") as! String)
-                            OneSignal.postNotification(["contents" : ["en" : "new like"], "include_player_ids" : ["\(self.playerIDArray.last!)"]])
+                            OneSignal.postNotification([
+                                "contents" : ["en" : "new like"],
+                                "include_player_ids" : ["\(self.playerIDArray.last!)"],
+                                "ios_badgeType" : "Increase",
+                                "ios_badgeCount" : "1"
+                            ])
                         }
                     } else {
                         
