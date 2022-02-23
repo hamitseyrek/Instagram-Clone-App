@@ -17,7 +17,7 @@ class FeedVC: UIViewController, UIWindowSceneDelegate, UITableViewDelegate, UITa
     var uuidArray = [String]()
     var commentArray = [String]()
     var imageArray = [PFFileObject]()
-    
+    var playerID = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +28,33 @@ class FeedVC: UIViewController, UIWindowSceneDelegate, UITableViewDelegate, UITa
         
         getDataFromParse()
         
-        OneSignal.postNotification(["contents": ["en": "Test Message"], "include_player_ids": ["0c7d4788-94d8-11ec-852a-bacdb7b5f5ce"]])
-
+        if let deviceState = OneSignal.getDeviceState() {
+            let userId = deviceState.userId
+            
+            /*
+            print("OneSignal Push Player ID: ", userId ?? "called too early, not set yet")
+            let subscribed = deviceState.isSubscribed
+            print("Device is subscribed: ", subscribed)
+            let hasNotificationPermission = deviceState.hasNotificationPermission
+            print("Device has notification permissions enabled: ", hasNotificationPermission)
+            let notificationPermissionStatus = deviceState.notificationPermissionStatus
+            print("Device's notification permission status: ", notificationPermissionStatus.rawValue)
+            let pushToken = deviceState.pushToken
+            print("Device Push Token Identifier: ", pushToken ?? "no push token, not subscribed")
+            */
+        
+            if let userId = userId {
+                let user = PFUser.current()
+                let object = PFObject(className: "playerId")
+                object["player_id"] = userId
+                object["user_name"] = user?.username
+                object.saveInBackground { result, error in
+                    if error != nil {
+                        print("something went wrong")
+                    }
+                }
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
