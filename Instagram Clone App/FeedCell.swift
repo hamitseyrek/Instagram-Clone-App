@@ -7,6 +7,7 @@
 
 import UIKit
 import Parse
+import OneSignal
 
 class FeedCell: UITableViewCell {
 
@@ -14,6 +15,8 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var uuidLabel: UILabel!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
+    
+    var playerIDArray = [String]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,10 +37,25 @@ class FeedCell: UITableViewCell {
         
         object.saveInBackground { result, error in
             if error != nil {
-                let alert = UIAlertController(title: "Error", message: "Something webt wrong!!", preferredStyle: UIAlertController.Style.alert)
+                let alert = UIAlertController(title: "Error", message: "Something went wrong!!", preferredStyle: UIAlertController.Style.alert)
                 let button = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
                 alert.addAction(button)
                 UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+            } else {
+                let query = PFQuery(className: "playerId")
+                query.whereKey("user_name", equalTo: self.userNameLabel.text!)
+                query.findObjectsInBackground { objects, error in
+                    if error == nil {
+                        print(objects)
+                        self.playerIDArray.removeAll()
+                        for object in objects! {
+                            self.playerIDArray.append(object.object(forKey: "player_id") as! String)
+                            OneSignal.postNotification(["contents" : ["en" : "new like"], "include_player_ids" : ["\(self.playerIDArray.last!)"]])
+                        }
+                    } else {
+                        
+                    }
+                }
             }
         }
     }
@@ -48,7 +66,7 @@ class FeedCell: UITableViewCell {
         
         object.saveInBackground { result, error in
             if error != nil {
-                let alert = UIAlertController(title: "Error", message: "Something webt wrong!!", preferredStyle: UIAlertController.Style.alert)
+                let alert = UIAlertController(title: "Error", message: "Something went wrong!!", preferredStyle: UIAlertController.Style.alert)
                 let button = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
                 alert.addAction(button)
                 UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
