@@ -7,6 +7,7 @@
 
 import UIKit
 import Parse
+import OneSignal
 
 class FeedVC: UIViewController, UIWindowSceneDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -26,6 +27,9 @@ class FeedVC: UIViewController, UIWindowSceneDelegate, UITableViewDelegate, UITa
         tableView.dataSource = self
         
         getDataFromParse()
+        
+        OneSignal.postNotification(["contents": ["en": "Test Message"], "include_player_ids": ["0c7d4788-94d8-11ec-852a-bacdb7b5f5ce"]])
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
